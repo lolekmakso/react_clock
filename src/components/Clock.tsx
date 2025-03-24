@@ -6,6 +6,7 @@ interface ClockProps {
 
 interface ClockState {
   time: string;
+  isVisible: boolean;
 }
 
 export class Clock extends Component<ClockProps, ClockState> {
@@ -13,19 +14,29 @@ export class Clock extends Component<ClockProps, ClockState> {
 
   state: ClockState = {
     time: new Date().toUTCString().slice(-12, -4),
+    isVisible: true, // Добавляем состояние видимости
   };
 
   componentDidMount() {
     this.timerId = window.setInterval(() => {
-      this.setState({ time: new Date().toUTCString().slice(-12, -4) });
-      // eslint-disable-next-line no-console
-      console.log(`Current time: ${this.state.time}`);
+      if (this.state.isVisible) {
+        this.setState({ time: new Date().toUTCString().slice(-12, -4) });
+        // eslint-disable-next-line no-console
+        console.log(`Current time: ${this.state.time}`);
+      }
     }, 1000);
   }
 
   componentWillUnmount() {
     if (this.timerId) {
       window.clearInterval(this.timerId);
+    }
+  }
+
+  componentDidUpdate(prevProps: ClockProps) {
+    if (prevProps.name !== this.props.name) {
+      // eslint-disable-next-line no-console
+      console.warn(`Renamed from ${prevProps.name} to ${this.props.name}`);
     }
   }
 

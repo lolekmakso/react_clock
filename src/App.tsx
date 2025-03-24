@@ -18,15 +18,14 @@ export class App extends Component<{}, AppState> {
   };
 
   componentDidMount() {
-    document.addEventListener('contextmenu', this.hideClock);
-    document.addEventListener('click', this.showClock);
-
+    document.addEventListener('contextmenu', this.hideClockComponent);
+    document.addEventListener('click', this.showClockComponent);
     this.startClockRenaming();
   }
 
   componentWillUnmount() {
-    document.removeEventListener('contextmenu', this.hideClock);
-    document.removeEventListener('click', this.showClock);
+    document.removeEventListener('contextmenu', this.hideClockComponent);
+    document.removeEventListener('click', this.showClockComponent);
   }
 
   startClockRenaming = () => {
@@ -42,12 +41,12 @@ export class App extends Component<{}, AppState> {
     }, 3300);
   };
 
-  hideClock = (event: MouseEvent) => {
+  hideClockComponent = (event: MouseEvent) => {
     event.preventDefault();
     this.setState({ hasClock: false });
   };
 
-  showClock = () => {
+  showClockComponent = () => {
     this.setState({ hasClock: true });
   };
 
